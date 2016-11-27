@@ -12,14 +12,9 @@ public class TextEditor extends JFrame {
   private Action openAction = new OpenAction();
   private Action saveAction = new SaveAction();
 
-  private JTextComponent textComp;
+  public JTextComponent textComp;
   private Hashtable actionHash = new Hashtable();
 
-  public static void main(String[] args) {
-    TextEditor editor = new TextEditor();
-    editor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    editor.setVisible(true);
-  }
 
   // Create an editor.
   public TextEditor() {
@@ -29,7 +24,6 @@ public class TextEditor extends JFrame {
 
     Container content = getContentPane();
     content.add(textComp, BorderLayout.CENTER);
-    content.add(createToolBar(), BorderLayout.NORTH);
     setJMenuBar(createMenuBar());
     setSize(320, 240);
   }
@@ -60,23 +54,7 @@ public class TextEditor extends JFrame {
     a.putValue(Action.NAME, "Select All");
   }
 
-  // Create a simple JToolBar with some buttons.
-  protected JToolBar createToolBar() {
-    JToolBar bar = new JToolBar();
-
-    // Add simple actions for opening & saving.
-    bar.add(getOpenAction()).setText("");
-    bar.add(getSaveAction()).setText("");
-    bar.addSeparator();
-
-    // Add cut/copy/paste buttons.
-    bar.add(textComp.getActionMap().get(DefaultEditorKit.cutAction)).setText("");
-    bar.add(textComp.getActionMap().get(
-              DefaultEditorKit.copyAction)).setText("");
-    bar.add(textComp.getActionMap().get(
-              DefaultEditorKit.pasteAction)).setText("");
-    return bar;
-  }
+  
 
   // Create a JMenuBar with file & edit menus.
   protected JMenuBar createMenuBar() {
@@ -88,7 +66,7 @@ public class TextEditor extends JFrame {
 
     file.add(getOpenAction());
     file.add(getSaveAction());
-    file.add(new ExitAction());
+  
     edit.add(textComp.getActionMap().get(DefaultEditorKit.cutAction));
     edit.add(textComp.getActionMap().get(DefaultEditorKit.copyAction));
     edit.add(textComp.getActionMap().get(DefaultEditorKit.pasteAction));
@@ -106,11 +84,7 @@ public class TextEditor extends JFrame {
 
   // ********** ACTION INNER CLASSES ********** //
 
-  // A very simple exit action
-  public class ExitAction extends AbstractAction {
-    public ExitAction() { super("Exit"); }
-    public void actionPerformed(ActionEvent ev) { System.exit(0); }
-  }
+  
 
   // An action that opens an existing file
   class OpenAction extends AbstractAction {
@@ -155,7 +129,7 @@ public class TextEditor extends JFrame {
     }
 
     // Query user for a filename and attempt to open and write the text
-    // componentâ€™s content to the file.
+    // component's content to the file.
     public void actionPerformed(ActionEvent ev) {
       JFileChooser chooser = new JFileChooser();
       if (chooser.showSaveDialog(TextEditor.this) !=
